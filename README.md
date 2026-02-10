@@ -1,10 +1,10 @@
-# @clawdbot/linq
+# @openclaw/linq
 
-iMessage, RCS, and SMS channel for [clawdbot](https://github.com/openclaw/clawdbot) — powered by the [Linq Partner API](https://linqapp.com). No Mac required.
+iMessage, RCS, and SMS channel for [openclaw](https://github.com/openclaw/openclaw) — powered by the [Linq Partner API](https://linqapp.com). No Mac required.
 
 ## Overview
 
-This plugin connects clawdbot to iMessage, RCS, and SMS via Linq's cloud API. Messages are sent and received through a provisioned phone number, with inbound delivery via webhooks.
+This plugin connects openclaw to iMessage, RCS, and SMS via Linq's cloud API. Messages are sent and received through a provisioned phone number, with inbound delivery via webhooks.
 
 Features:
 
@@ -19,14 +19,14 @@ Features:
 
 1. A **Linq Partner API** account and bearer token
 2. A **provisioned phone number** (E.164 format, e.g. `+15551234567`)
-3. A **public webhook URL** — clawdbot's gateway must be reachable from the internet (e.g. via ngrok, Cloudflare Tunnel, or a public server)
+3. A **public webhook URL** — openclaw's gateway must be reachable from the internet (e.g. via ngrok, Cloudflare Tunnel, or a public server)
 
 ## Installation
 
 ### One-liner (recommended)
 
 ```bash
-clawdbot plugins install github:nickvasilescu/clawdbot-channel-linq
+openclaw plugins install github:johnpearce/openclaw-channel-linq
 ```
 
 This clones the repo, installs dependencies, auto-builds via the `prepare` script, and registers the plugin. Done.
@@ -34,7 +34,7 @@ This clones the repo, installs dependencies, auto-builds via the `prepare` scrip
 ### From npm (when published)
 
 ```bash
-clawdbot plugins install @clawdbot/linq
+openclaw plugins install @openclaw/linq
 ```
 
 ### Manual (clone + link)
@@ -42,24 +42,24 @@ clawdbot plugins install @clawdbot/linq
 If you want to develop or customize the plugin locally:
 
 ```bash
-git clone https://github.com/nickvasilescu/clawdbot-channel-linq.git
-cd clawdbot-channel-linq
+git clone https://github.com/johnpearce/openclaw-channel-linq.git
+cd openclaw-channel-linq
 npm install && npm run build
 ```
 
 Then either link it:
 
 ```bash
-clawdbot plugins install --link /path/to/clawdbot-channel-linq
+openclaw plugins install --link /path/to/openclaw-channel-linq
 ```
 
-Or add the path manually to `~/.clawdbot/clawdbot.json`:
+Or add the path manually to `~/.openclaw/openclaw.json`:
 
 ```json
 {
   "plugins": {
     "load": {
-      "paths": ["/path/to/clawdbot-channel-linq"]
+      "paths": ["/path/to/openclaw-channel-linq"]
     }
   }
 }
@@ -67,7 +67,7 @@ Or add the path manually to `~/.clawdbot/clawdbot.json`:
 
 ## Configuration
 
-All config lives under `channels.linq` in `~/.clawdbot/clawdbot.json`:
+All config lives under `channels.linq` in `~/.openclaw/openclaw.json`:
 
 ```json
 {
@@ -105,7 +105,7 @@ The API token can also be set via the `LINQ_API_TOKEN` environment variable.
 
 ## Exposing Your Gateway (ngrok)
 
-Linq delivers inbound messages via webhooks, so your clawdbot gateway must be reachable from the public internet. The easiest way to do this on a local machine is [ngrok](https://ngrok.com).
+Linq delivers inbound messages via webhooks, so your openclaw gateway must be reachable from the public internet. The easiest way to do this on a local machine is [ngrok](https://ngrok.com).
 
 ### 1. Install ngrok
 
@@ -126,7 +126,7 @@ ngrok config add-authtoken YOUR_NGROK_AUTHTOKEN
 
 ### 3. Start the tunnel
 
-The clawdbot gateway runs on port 18789 by default:
+The openclaw gateway runs on port 18789 by default:
 
 ```bash
 ngrok http 18789
@@ -150,7 +150,7 @@ Use this URL when registering the webhook with Linq (next section).
 
 - **Free tier URLs change every restart.** If ngrok restarts, you'll need to re-register the webhook with the new URL. Consider an [ngrok static domain](https://ngrok.com/docs/guides/other-guides/how-to-set-up-a-custom-domain/) (free, one per account) to avoid this.
 - **Alternatives:** If you have a public server or VPS, you can skip ngrok entirely — just point the webhook URL at your server's IP/domain on port 18789. Cloudflare Tunnel and Tailscale Funnel also work.
-- **Keep ngrok running** alongside the clawdbot gateway. If the tunnel goes down, Linq can't deliver webhooks and inbound messages will be lost.
+- **Keep ngrok running** alongside the openclaw gateway. If the tunnel goes down, Linq can't deliver webhooks and inbound messages will be lost.
 
 ## Webhook Setup
 
@@ -219,7 +219,7 @@ Copy the `signing_secret` value and add it to your config as `webhookSecret`. Yo
 The plugin exports a setup helper you can use from Node.js:
 
 ```ts
-import { createLinqWebhookSubscription } from "@clawdbot/linq/dist/cli/setup.js";
+import { createLinqWebhookSubscription } from "@openclaw/linq/dist/cli/setup.js";
 
 const result = await createLinqWebhookSubscription(
   "your-api-token",
@@ -241,19 +241,19 @@ The signed payload is `${timestamp}.${rawBody}`. Requests older than 5 minutes a
 
 ### Start the gateway
 
-With everything configured, start (or restart) the clawdbot gateway:
+With everything configured, start (or restart) the openclaw gateway:
 
 ```bash
-clawdbot gateway start
+openclaw gateway start
 ```
 
 Verify the Linq channel is loaded:
 
 ```bash
-clawdbot status
+openclaw status
 ```
 
-You should see the Linq channel listed as running. Send a test iMessage to your provisioned number — it should appear in clawdbot and trigger a reply.
+You should see the Linq channel listed as running. Send a test iMessage to your provisioned number — it should appear in openclaw and trigger a reply.
 
 ## Multi-Account Support
 
@@ -324,7 +324,7 @@ Set `channels.linq.fromNumber` to your provisioned E.164 phone number.
 
 ### Chat store issues
 
-Chat ID mappings are cached at `~/.clawdbot/credentials/linq-chats.json`. If you encounter stale mappings, delete this file and restart the gateway — chats will be re-created on next send.
+Chat ID mappings are cached at `~/.openclaw/credentials/linq-chats.json`. If you encounter stale mappings, delete this file and restart the gateway — chats will be re-created on next send.
 
 ## Security Notes
 

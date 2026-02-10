@@ -1,15 +1,15 @@
 /**
- * Type declarations for clawdbot/plugin-sdk.
+ * Type declarations for openclaw/plugin-sdk.
  *
- * These are derived from the runtime shapes in clawdbot's compiled JS.
- * Since clawdbot doesn't ship .d.ts files, we declare the subset we need.
+ * These are derived from the runtime shapes in openclaw's compiled JS.
+ * Since openclaw doesn't ship .d.ts files, we declare the subset we need.
  */
-declare module "clawdbot/plugin-sdk" {
+declare module "openclaw/plugin-sdk" {
   import { z } from "zod";
 
   // ── Config ──
 
-  export interface ClawdbotConfig {
+  export interface OpenclawConfig {
     channels?: Record<string, any>;
     session?: { store?: any };
     [key: string]: any;
@@ -38,7 +38,7 @@ declare module "clawdbot/plugin-sdk" {
     pairing?: {
       idLabel: string;
       normalizeAllowEntry?: (entry: string) => string;
-      notifyApproval?: (ctx: { cfg: ClawdbotConfig; id: string }) => Promise<void>;
+      notifyApproval?: (ctx: { cfg: OpenclawConfig; id: string }) => Promise<void>;
     };
     onboarding?: any;
     capabilities: {
@@ -53,18 +53,18 @@ declare module "clawdbot/plugin-sdk" {
     reload?: { configPrefixes: string[] };
     configSchema?: any;
     config: {
-      listAccountIds: (cfg: ClawdbotConfig) => string[];
-      resolveAccount: (cfg: ClawdbotConfig, accountId: string) => T;
-      defaultAccountId: (cfg: ClawdbotConfig) => string;
-      setAccountEnabled: (ctx: { cfg: ClawdbotConfig; accountId: string; enabled: boolean }) => ClawdbotConfig;
-      deleteAccount: (ctx: { cfg: ClawdbotConfig; accountId: string }) => ClawdbotConfig;
+      listAccountIds: (cfg: OpenclawConfig) => string[];
+      resolveAccount: (cfg: OpenclawConfig, accountId: string) => T;
+      defaultAccountId: (cfg: OpenclawConfig) => string;
+      setAccountEnabled: (ctx: { cfg: OpenclawConfig; accountId: string; enabled: boolean }) => OpenclawConfig;
+      deleteAccount: (ctx: { cfg: OpenclawConfig; accountId: string }) => OpenclawConfig;
       isConfigured: (account: T) => boolean;
       describeAccount: (account: T) => Record<string, any>;
-      resolveAllowFrom: (ctx: { cfg: ClawdbotConfig; accountId: string }) => string[];
+      resolveAllowFrom: (ctx: { cfg: OpenclawConfig; accountId: string }) => string[];
       formatAllowFrom: (ctx: { allowFrom: string[] }) => string[];
     };
     security?: {
-      resolveDmPolicy?: (ctx: { cfg: ClawdbotConfig; accountId?: string; account: T }) => {
+      resolveDmPolicy?: (ctx: { cfg: OpenclawConfig; accountId?: string; account: T }) => {
         policy: string;
         allowFrom: string[];
         policyPath?: string;
@@ -72,11 +72,11 @@ declare module "clawdbot/plugin-sdk" {
         approveHint?: string;
         normalizeEntry?: (raw: string) => string;
       };
-      collectWarnings?: (ctx: { account: T; cfg: ClawdbotConfig }) => string[];
+      collectWarnings?: (ctx: { account: T; cfg: OpenclawConfig }) => string[];
     };
     groups?: {
       resolveRequireMention?: (ctx: any) => boolean;
-      resolveToolPolicy?: (cfg: ClawdbotConfig, accountId: string, groupId: string) => string | undefined;
+      resolveToolPolicy?: (cfg: OpenclawConfig, accountId: string, groupId: string) => string | undefined;
     };
     threading?: any;
     messaging: {
@@ -91,9 +91,9 @@ declare module "clawdbot/plugin-sdk" {
     actions?: any;
     setup?: {
       resolveAccountId?: (ctx: { accountId?: string }) => string;
-      applyAccountName?: (ctx: { cfg: ClawdbotConfig; accountId: string; name?: string }) => ClawdbotConfig;
+      applyAccountName?: (ctx: { cfg: OpenclawConfig; accountId: string; name?: string }) => OpenclawConfig;
       validateInput?: (ctx: { accountId: string; input: any }) => string | null;
-      applyAccountConfig?: (ctx: { cfg: ClawdbotConfig; accountId: string; input: any }) => ClawdbotConfig;
+      applyAccountConfig?: (ctx: { cfg: OpenclawConfig; accountId: string; input: any }) => OpenclawConfig;
     };
     outbound?: {
       deliveryMode: "direct" | "buffered" | "coalesced";
@@ -104,7 +104,7 @@ declare module "clawdbot/plugin-sdk" {
         to: string;
         text: string;
         accountId?: string;
-        cfg?: ClawdbotConfig;
+        cfg?: OpenclawConfig;
         deps?: any;
         replyToId?: string;
         threadId?: string;
@@ -114,7 +114,7 @@ declare module "clawdbot/plugin-sdk" {
         text: string;
         mediaUrl: string;
         accountId?: string;
-        cfg?: ClawdbotConfig;
+        cfg?: OpenclawConfig;
         deps?: any;
         replyToId?: string;
         threadId?: string;
@@ -127,19 +127,19 @@ declare module "clawdbot/plugin-sdk" {
       buildChannelSummary?: (ctx: any) => any;
       probeAccount?: (ctx: { account: T; timeoutMs: number }) => Promise<any>;
       auditAccount?: (ctx: any) => Promise<any>;
-      buildAccountSnapshot?: (ctx: { account: T; cfg?: ClawdbotConfig; runtime?: any; probe?: any }) => any;
+      buildAccountSnapshot?: (ctx: { account: T; cfg?: OpenclawConfig; runtime?: any; probe?: any }) => any;
       resolveAccountState?: (ctx: any) => string;
     };
     gateway?: {
       startAccount?: (ctx: {
         account: T;
-        cfg: ClawdbotConfig;
+        cfg: OpenclawConfig;
         runtime: PluginRuntime;
         abortSignal: AbortSignal;
         log?: any;
         setStatus?: (state: any) => void;
       }) => Promise<any>;
-      logoutAccount?: (ctx: { accountId: string; cfg: ClawdbotConfig }) => Promise<any>;
+      logoutAccount?: (ctx: { accountId: string; cfg: OpenclawConfig }) => Promise<any>;
     };
     streaming?: any;
     agentPrompt?: any;
@@ -150,8 +150,8 @@ declare module "clawdbot/plugin-sdk" {
   export interface PluginRuntime {
     version: string;
     config: {
-      loadConfig(): ClawdbotConfig;
-      writeConfigFile(cfg: ClawdbotConfig): Promise<void>;
+      loadConfig(): OpenclawConfig;
+      writeConfigFile(cfg: OpenclawConfig): Promise<void>;
     };
     system: {
       enqueueSystemEvent(event: any): void;
@@ -167,22 +167,22 @@ declare module "clawdbot/plugin-sdk" {
         chunkText(text: string, limit: number): string[];
         chunkMarkdownText(text: string, limit: number): string[];
         chunkMarkdownTextWithMode(text: string, limit: number, mode: string): string[];
-        resolveChunkMode(cfg: ClawdbotConfig, channel: string): string;
-        resolveTextChunkLimit?(cfg: ClawdbotConfig, channel: string, accountId?: string, opts?: any): number;
-        hasControlCommand(text: string, cfg: ClawdbotConfig): boolean;
+        resolveChunkMode(cfg: OpenclawConfig, channel: string): string;
+        resolveTextChunkLimit?(cfg: OpenclawConfig, channel: string, accountId?: string, opts?: any): number;
+        hasControlCommand(text: string, cfg: OpenclawConfig): boolean;
         [key: string]: any;
       };
       reply: {
         dispatchReplyWithBufferedBlockDispatcher(ctx: any): Promise<any>;
-        resolveEffectiveMessagesConfig(cfg: ClawdbotConfig, agentId?: string): any;
+        resolveEffectiveMessagesConfig(cfg: OpenclawConfig, agentId?: string): any;
         formatInboundEnvelope(ctx: any): string;
         finalizeInboundContext(ctx: any): any;
-        resolveEnvelopeFormatOptions(cfg: ClawdbotConfig): any;
+        resolveEnvelopeFormatOptions(cfg: OpenclawConfig): any;
         [key: string]: any;
       };
       routing: {
         resolveAgentRoute(ctx: {
-          cfg: ClawdbotConfig;
+          cfg: OpenclawConfig;
           channel: string;
           accountId: string;
           peer: { kind: "dm" | "group" | "channel"; id: string };
@@ -215,20 +215,20 @@ declare module "clawdbot/plugin-sdk" {
       getChildLogger(bindings: string, opts?: any): any;
     };
     state: {
-      resolveStateDir(cfg: ClawdbotConfig): string;
+      resolveStateDir(cfg: OpenclawConfig): string;
     };
     [key: string]: any;
   }
 
   // ── Plugin API ──
 
-  export interface ClawdbotPluginApi {
+  export interface OpenclawPluginApi {
     id: string;
     name: string;
     version: string;
     description: string;
     source: string;
-    config: ClawdbotConfig;
+    config: OpenclawConfig;
     pluginConfig: any;
     runtime: PluginRuntime;
     logger: any;
@@ -259,19 +259,19 @@ declare module "clawdbot/plugin-sdk" {
   export function formatPairingApproveHint(channel: string): string;
 
   export function setAccountEnabledInConfigSection(ctx: {
-    cfg: ClawdbotConfig;
+    cfg: OpenclawConfig;
     sectionKey: string;
     accountId: string;
     enabled: boolean;
     allowTopLevel?: boolean;
-  }): ClawdbotConfig;
+  }): OpenclawConfig;
 
   export function deleteAccountFromConfigSection(ctx: {
-    cfg: ClawdbotConfig;
+    cfg: OpenclawConfig;
     sectionKey: string;
     accountId: string;
     clearBaseFields?: string[];
-  }): ClawdbotConfig;
+  }): OpenclawConfig;
 
   export function registerPluginHttpRoute(params: {
     path: string;
@@ -288,7 +288,7 @@ declare module "clawdbot/plugin-sdk" {
 
   // ── Ack Reactions ──
 
-  export function resolveAckReaction(cfg: ClawdbotConfig, agentId?: string): string | undefined;
+  export function resolveAckReaction(cfg: OpenclawConfig, agentId?: string): string | undefined;
 
   export function shouldAckReaction(params: {
     scope: string;
