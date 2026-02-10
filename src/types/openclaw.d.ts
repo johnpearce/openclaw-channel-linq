@@ -9,7 +9,7 @@ declare module "openclaw/plugin-sdk" {
 
   // ── Config ──
 
-  export interface OpenclawConfig {
+  export interface OpenClawConfig {
     channels?: Record<string, any>;
     session?: { store?: any };
     [key: string]: any;
@@ -38,7 +38,7 @@ declare module "openclaw/plugin-sdk" {
     pairing?: {
       idLabel: string;
       normalizeAllowEntry?: (entry: string) => string;
-      notifyApproval?: (ctx: { cfg: OpenclawConfig; id: string }) => Promise<void>;
+      notifyApproval?: (ctx: { cfg: OpenClawConfig; id: string }) => Promise<void>;
     };
     onboarding?: any;
     capabilities: {
@@ -53,18 +53,18 @@ declare module "openclaw/plugin-sdk" {
     reload?: { configPrefixes: string[] };
     configSchema?: any;
     config: {
-      listAccountIds: (cfg: OpenclawConfig) => string[];
-      resolveAccount: (cfg: OpenclawConfig, accountId: string) => T;
-      defaultAccountId: (cfg: OpenclawConfig) => string;
-      setAccountEnabled: (ctx: { cfg: OpenclawConfig; accountId: string; enabled: boolean }) => OpenclawConfig;
-      deleteAccount: (ctx: { cfg: OpenclawConfig; accountId: string }) => OpenclawConfig;
+      listAccountIds: (cfg: OpenClawConfig) => string[];
+      resolveAccount: (cfg: OpenClawConfig, accountId: string) => T;
+      defaultAccountId: (cfg: OpenClawConfig) => string;
+      setAccountEnabled: (ctx: { cfg: OpenClawConfig; accountId: string; enabled: boolean }) => OpenClawConfig;
+      deleteAccount: (ctx: { cfg: OpenClawConfig; accountId: string }) => OpenClawConfig;
       isConfigured: (account: T) => boolean;
       describeAccount: (account: T) => Record<string, any>;
-      resolveAllowFrom: (ctx: { cfg: OpenclawConfig; accountId: string }) => string[];
+      resolveAllowFrom: (ctx: { cfg: OpenClawConfig; accountId: string }) => string[];
       formatAllowFrom: (ctx: { allowFrom: string[] }) => string[];
     };
     security?: {
-      resolveDmPolicy?: (ctx: { cfg: OpenclawConfig; accountId?: string; account: T }) => {
+      resolveDmPolicy?: (ctx: { cfg: OpenClawConfig; accountId?: string; account: T }) => {
         policy: string;
         allowFrom: string[];
         policyPath?: string;
@@ -72,11 +72,11 @@ declare module "openclaw/plugin-sdk" {
         approveHint?: string;
         normalizeEntry?: (raw: string) => string;
       };
-      collectWarnings?: (ctx: { account: T; cfg: OpenclawConfig }) => string[];
+      collectWarnings?: (ctx: { account: T; cfg: OpenClawConfig }) => string[];
     };
     groups?: {
       resolveRequireMention?: (ctx: any) => boolean;
-      resolveToolPolicy?: (cfg: OpenclawConfig, accountId: string, groupId: string) => string | undefined;
+      resolveToolPolicy?: (cfg: OpenClawConfig, accountId: string, groupId: string) => string | undefined;
     };
     threading?: any;
     messaging: {
@@ -91,9 +91,9 @@ declare module "openclaw/plugin-sdk" {
     actions?: any;
     setup?: {
       resolveAccountId?: (ctx: { accountId?: string }) => string;
-      applyAccountName?: (ctx: { cfg: OpenclawConfig; accountId: string; name?: string }) => OpenclawConfig;
+      applyAccountName?: (ctx: { cfg: OpenClawConfig; accountId: string; name?: string }) => OpenClawConfig;
       validateInput?: (ctx: { accountId: string; input: any }) => string | null;
-      applyAccountConfig?: (ctx: { cfg: OpenclawConfig; accountId: string; input: any }) => OpenclawConfig;
+      applyAccountConfig?: (ctx: { cfg: OpenClawConfig; accountId: string; input: any }) => OpenClawConfig;
     };
     outbound?: {
       deliveryMode: "direct" | "buffered" | "coalesced";
@@ -104,7 +104,7 @@ declare module "openclaw/plugin-sdk" {
         to: string;
         text: string;
         accountId?: string;
-        cfg?: OpenclawConfig;
+        cfg?: OpenClawConfig;
         deps?: any;
         replyToId?: string;
         threadId?: string;
@@ -114,7 +114,7 @@ declare module "openclaw/plugin-sdk" {
         text: string;
         mediaUrl: string;
         accountId?: string;
-        cfg?: OpenclawConfig;
+        cfg?: OpenClawConfig;
         deps?: any;
         replyToId?: string;
         threadId?: string;
@@ -127,19 +127,19 @@ declare module "openclaw/plugin-sdk" {
       buildChannelSummary?: (ctx: any) => any;
       probeAccount?: (ctx: { account: T; timeoutMs: number }) => Promise<any>;
       auditAccount?: (ctx: any) => Promise<any>;
-      buildAccountSnapshot?: (ctx: { account: T; cfg?: OpenclawConfig; runtime?: any; probe?: any }) => any;
+      buildAccountSnapshot?: (ctx: { account: T; cfg?: OpenClawConfig; runtime?: any; probe?: any }) => any;
       resolveAccountState?: (ctx: any) => string;
     };
     gateway?: {
       startAccount?: (ctx: {
         account: T;
-        cfg: OpenclawConfig;
+        cfg: OpenClawConfig;
         runtime: PluginRuntime;
         abortSignal: AbortSignal;
         log?: any;
         setStatus?: (state: any) => void;
       }) => Promise<any>;
-      logoutAccount?: (ctx: { accountId: string; cfg: OpenclawConfig }) => Promise<any>;
+      logoutAccount?: (ctx: { accountId: string; cfg: OpenClawConfig }) => Promise<any>;
     };
     streaming?: any;
     agentPrompt?: any;
@@ -150,8 +150,8 @@ declare module "openclaw/plugin-sdk" {
   export interface PluginRuntime {
     version: string;
     config: {
-      loadConfig(): OpenclawConfig;
-      writeConfigFile(cfg: OpenclawConfig): Promise<void>;
+      loadConfig(): OpenClawConfig;
+      writeConfigFile(cfg: OpenClawConfig): Promise<void>;
     };
     system: {
       enqueueSystemEvent(event: any): void;
@@ -167,22 +167,22 @@ declare module "openclaw/plugin-sdk" {
         chunkText(text: string, limit: number): string[];
         chunkMarkdownText(text: string, limit: number): string[];
         chunkMarkdownTextWithMode(text: string, limit: number, mode: string): string[];
-        resolveChunkMode(cfg: OpenclawConfig, channel: string): string;
-        resolveTextChunkLimit?(cfg: OpenclawConfig, channel: string, accountId?: string, opts?: any): number;
-        hasControlCommand(text: string, cfg: OpenclawConfig): boolean;
+        resolveChunkMode(cfg: OpenClawConfig, channel: string): string;
+        resolveTextChunkLimit?(cfg: OpenClawConfig, channel: string, accountId?: string, opts?: any): number;
+        hasControlCommand(text: string, cfg: OpenClawConfig): boolean;
         [key: string]: any;
       };
       reply: {
         dispatchReplyWithBufferedBlockDispatcher(ctx: any): Promise<any>;
-        resolveEffectiveMessagesConfig(cfg: OpenclawConfig, agentId?: string): any;
+        resolveEffectiveMessagesConfig(cfg: OpenClawConfig, agentId?: string): any;
         formatInboundEnvelope(ctx: any): string;
         finalizeInboundContext(ctx: any): any;
-        resolveEnvelopeFormatOptions(cfg: OpenclawConfig): any;
+        resolveEnvelopeFormatOptions(cfg: OpenClawConfig): any;
         [key: string]: any;
       };
       routing: {
         resolveAgentRoute(ctx: {
-          cfg: OpenclawConfig;
+          cfg: OpenClawConfig;
           channel: string;
           accountId: string;
           peer: { kind: "dm" | "group" | "channel"; id: string };
@@ -215,20 +215,20 @@ declare module "openclaw/plugin-sdk" {
       getChildLogger(bindings: string, opts?: any): any;
     };
     state: {
-      resolveStateDir(cfg: OpenclawConfig): string;
+      resolveStateDir(cfg: OpenClawConfig): string;
     };
     [key: string]: any;
   }
 
   // ── Plugin API ──
 
-  export interface OpenclawPluginApi {
+  export interface OpenClawPluginApi {
     id: string;
     name: string;
     version: string;
     description: string;
     source: string;
-    config: OpenclawConfig;
+    config: OpenClawConfig;
     pluginConfig: any;
     runtime: PluginRuntime;
     logger: any;
@@ -259,19 +259,19 @@ declare module "openclaw/plugin-sdk" {
   export function formatPairingApproveHint(channel: string): string;
 
   export function setAccountEnabledInConfigSection(ctx: {
-    cfg: OpenclawConfig;
+    cfg: OpenClawConfig;
     sectionKey: string;
     accountId: string;
     enabled: boolean;
     allowTopLevel?: boolean;
-  }): OpenclawConfig;
+  }): OpenClawConfig;
 
   export function deleteAccountFromConfigSection(ctx: {
-    cfg: OpenclawConfig;
+    cfg: OpenClawConfig;
     sectionKey: string;
     accountId: string;
     clearBaseFields?: string[];
-  }): OpenclawConfig;
+  }): OpenClawConfig;
 
   export function registerPluginHttpRoute(params: {
     path: string;
@@ -288,7 +288,7 @@ declare module "openclaw/plugin-sdk" {
 
   // ── Ack Reactions ──
 
-  export function resolveAckReaction(cfg: OpenclawConfig, agentId?: string): string | undefined;
+  export function resolveAckReaction(cfg: OpenClawConfig, agentId?: string): string | undefined;
 
   export function shouldAckReaction(params: {
     scope: string;

@@ -1,4 +1,4 @@
-import type { OpenclawPluginApi } from "openclaw/plugin-sdk";
+import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
 import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
 
 import { linqPlugin } from "./channel.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "Linq",
   description: "iMessage, RCS, and SMS via Linq Partner API — no Mac required",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenclawPluginApi) {
+  register(api: OpenClawPluginApi) {
     setLinqRuntime(api.runtime);
     api.registerChannel({ plugin: linqPlugin });
   },

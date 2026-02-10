@@ -11,7 +11,7 @@ import {
   shouldAckReaction,
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
-  type OpenclawConfig,
+  type OpenClawConfig,
 } from "openclaw/plugin-sdk";
 
 import { LinqConfigSchema, type LinqConfig, type ResolvedLinqAccount } from "./config.js";
@@ -42,7 +42,7 @@ function emojiToLinqReaction(emoji: string): LinqReactionType | undefined {
 
 // ── Account Resolution Helpers ──
 
-function resolveLinqToken(cfg: OpenclawConfig, accountId?: string): { token: string; source: "config" | "env" | "none" } {
+function resolveLinqToken(cfg: OpenClawConfig, accountId?: string): { token: string; source: "config" | "env" | "none" } {
   const linqConfig = (cfg.channels?.linq ?? {}) as LinqConfig;
   const accountConfig = accountId && accountId !== DEFAULT_ACCOUNT_ID
     ? (linqConfig.accounts?.[accountId] as LinqConfig | undefined) ?? linqConfig
@@ -60,7 +60,7 @@ function resolveLinqToken(cfg: OpenclawConfig, accountId?: string): { token: str
   return { token: "", source: "none" };
 }
 
-function resolveLinqAccount(cfg: OpenclawConfig, accountId?: string): ResolvedLinqAccount {
+function resolveLinqAccount(cfg: OpenClawConfig, accountId?: string): ResolvedLinqAccount {
   const linqConfig = (cfg.channels?.linq ?? {}) as LinqConfig;
   const resolvedId = normalizeAccountId(accountId);
 
@@ -83,7 +83,7 @@ function resolveLinqAccount(cfg: OpenclawConfig, accountId?: string): ResolvedLi
   };
 }
 
-function listLinqAccountIds(cfg: OpenclawConfig): string[] {
+function listLinqAccountIds(cfg: OpenClawConfig): string[] {
   const linqConfig = (cfg.channels?.linq ?? {}) as LinqConfig;
   const ids = new Set<string>();
   if (linqConfig.accounts && typeof linqConfig.accounts === "object") {
@@ -95,7 +95,7 @@ function listLinqAccountIds(cfg: OpenclawConfig): string[] {
   return [...ids].sort((a, b) => a.localeCompare(b));
 }
 
-function resolveDefaultLinqAccountId(cfg: OpenclawConfig): string {
+function resolveDefaultLinqAccountId(cfg: OpenClawConfig): string {
   const ids = listLinqAccountIds(cfg);
   return ids[0] ?? DEFAULT_ACCOUNT_ID;
 }
@@ -249,7 +249,7 @@ export const linqPlugin: ChannelPlugin<ResolvedLinqAccount> = {
     handleAction: async ({ action, params, cfg, accountId }: {
       action: string;
       params: Record<string, any>;
-      cfg: OpenclawConfig;
+      cfg: OpenClawConfig;
       accountId?: string;
     }) => {
       const account = resolveLinqAccount(cfg, accountId);
@@ -685,7 +685,7 @@ export const linqPlugin: ChannelPlugin<ResolvedLinqAccount> = {
       };
     },
     logoutAccount: async ({ accountId, cfg }) => {
-      const nextCfg = { ...cfg } as OpenclawConfig;
+      const nextCfg = { ...cfg } as OpenClawConfig;
       const linqConfig = (cfg.channels?.linq ?? {}) as LinqConfig;
       const nextLinq = { ...linqConfig };
       let cleared = false;
