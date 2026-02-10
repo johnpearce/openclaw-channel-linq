@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { homedir } from "node:os";
 
-const STORE_PATH = join(homedir(), ".clawdbot", "credentials", "linq-chats.json");
+const STORE_PATH = join(homedir(), ".openclaw", "credentials", "linq-chats.json");
 
 type ChatStore = Record<string, string>; // phone number -> chat ID
 

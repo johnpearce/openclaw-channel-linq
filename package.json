@@ -1,5 +1,5 @@
 {
-  "name": "@clawdbot/linq",
+  "name": "@openclaw/linq",
   "version": "0.1.0",
   "description": "iMessage, RCS, and SMS via Linq Partner API — no Mac required",
   "type": "module",
@@ -8,7 +8,7 @@
   "files": [
     "dist/",
     "src/types/",
-    "clawdbot.plugin.json",
+    "openclaw.plugin.json",
     "README.md",
     "LICENSE"
   ],
@@ -19,7 +19,7 @@
     "prepare": "test -d dist || npm run build",
     "prepublishOnly": "npm run clean && npm run build"
   },
-  "clawdbot": {
+  "openclaw": {
     "extensions": [
       "./dist/index.js"
     ],
@@ -33,28 +33,28 @@
       "systemImage": "message.fill"
     },
     "install": {
-      "npmSpec": "@clawdbot/linq",
+      "npmSpec": "@openclaw/linq",
       "defaultChoice": "npm"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nickvasilescu/clawdbot-channel-linq.git"
+    "url": "https://github.com/johnpearce/openclaw-channel-linq.git"
   },
-  "homepage": "https://github.com/nickvasilescu/clawdbot-channel-linq#readme",
+  "homepage": "https://github.com/johnpearce/openclaw-channel-linq#readme",
   "bugs": {
-    "url": "https://github.com/nickvasilescu/clawdbot-channel-linq/issues"
+    "url": "https://github.com/johnpearce/openclaw-channel-linq/issues"
   },
   "keywords": [
-    "clawdbot",
-    "clawdbot-plugin",
-    "clawdbot-channel",
+    "openclaw",
+    "openclaw-plugin",
+    "openclaw-channel",
     "linq",
     "imessage",
     "rcs",
     "sms"
   ],
-  "author": "clawdbot contributors",
+  "author": "openclaw contributors",
   "dependencies": {
     "zod": "^4.3.6"
   },
